@@ -1,0 +1,23 @@
+{
+  "name": "git_version.js",
+  "version": "0.0.1",
+  "description": "Generates a Git Version HTML",
+  "main": "git_version.js",
+  "scripts": {
+    "test": "node git_version.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "NA"
+  },
+  "keywords": [
+    "git",
+    "version"
+  ],
+  "author": "Jose Seravalli (https://github.com/jseravalli)",
+  "license": "BSD",
+  "dependencies": {
+    "gift": "0.0.5",
+    "moment": "~2.1.0"
+  }
+}
