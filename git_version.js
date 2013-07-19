@@ -1,6 +1,8 @@
-var git  = require('gift'), moment = require('moment'), _ = require('underscore');
+var git  = require('gift'), moment = require('moment'), _ = require('underscore'), args = process.argv.splice(2), dir = args[0] ? args[0] : __dirname;
 
-var repo = git(__dirname);
+console.log("git-epic");
+
+var repo = git(dir);
 
 repo.branch(function(err,head){
 
@@ -8,9 +10,9 @@ repo.branch(function(err,head){
 
 	var data = {
 		branch : head.name,
-		last_commit : commit_time.calendar()
+		last_commit : commit_time.calendar(),
+		directory : dir
 	};
-
 
 	console.log(data);
 
