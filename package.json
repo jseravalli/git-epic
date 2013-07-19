@@ -18,6 +18,7 @@
   "license": "BSD",
   "dependencies": {
     "gift": "0.0.5",
-    "moment": "~2.1.0"
+    "moment": "~2.1.0",
+    "underscore": "1.5.1"
   }
 }
