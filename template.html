@@ -1,9 +1,26 @@
 <html>
 	<head>
-		<title>Version</title>
+		<title>Release Notes</title>
 	</head>
 	<body>
-		<h1>Branch: <%= branch %></h1>
-		<h2>Last Commit: <%= last_commit %></h2>
+
+		<h1>Release Notes</h1>
+
+		<% _.each(tags.reverse(), function(tag){ %>
+
+		<h2>Release: <%= tag.name %></h2>
+		<h3>Last Commit: <%= tag.last_commit %></h3>
+
+			<ul>
+				<% _.each(tag.commits, function(commit){  
+
+					if(commit.message.lastIndexOf('JIRA') != -1){
+				 %>
+					<li><%= commit.message %></li>
+
+				<% }}) %>
+			</ul>
+
+		<% }) %>
 	</body>
 </html>
