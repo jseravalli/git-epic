@@ -13,7 +13,7 @@
 
 			<ul>
 				<% _.each(tag.commits, function(commit){  
-
+					//TODO: make this a parameter
 					if(commit.message.lastIndexOf('JIRA') != -1){
 				 %>
 					<li><%= commit.message %></li>
