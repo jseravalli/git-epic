@@ -12,13 +12,12 @@
 		<h3>Last Commit: <%= tag.last_commit %></h3>
 
 			<ul>
-				<% _.each(tag.commits, function(commit){  
-					//TODO: make this a parameter
-					if(commit.message.lastIndexOf('JIRA') != -1){
-				 %>
+				<% _.each(tag.commits, function(commit){  %>
+					
+					
 					<li><%= commit.message %></li>
 
-				<% }}) %>
+				<% }) %>
 			</ul>
 
 		<% }) %>
