@@ -12,7 +12,8 @@ var parseArgs = function(args){
 		"dir" : __dirname,
 		"filter" : [],
 		"output" : './version.html',
-		"template" : __dirname + '/template.html'
+		"template" : __dirname + '/template.html',
+		"tags" : -1
 	};
 
 	for(var i = 0; i < args.length; i+=2){
@@ -30,12 +31,14 @@ var parseArgs = function(args){
 			case '-t':
 				parsedArgs.template = args[i+1];
 			break;
-
+			case '-n':
+				parsedArgs.tags = args[i+1];
+			break;
 
 		}
 
 	}
-	console.log(parsedArgs);
+	console.log("Arguments: ", parsedArgs);
 	return parsedArgs;
 };
 
@@ -50,10 +53,10 @@ var	args = parseArgs(process.argv.splice(2)),
 
 var render = function(){
 	var fs = require('fs');	
-
+	
 	fs.writeFile(args.output, _.template(fs.readFileSync(args.template, "utf-8"), data), function(err) {
 	    if(err) {
-	        console.log(err);
+	        console.log("There was an error updating the version file: ", err);
 	    } else {
 	        console.log("The version file was updated!");
 	    }
@@ -62,7 +65,7 @@ var render = function(){
 
 repo.tags(function(err,tags){
 
-	tagTotal = tags.length-1;
+	tagTotal = tags.length;
 
 	_.each(tags, function(tag){	
 
@@ -111,6 +114,11 @@ repo.tags(function(err,tags){
 						
 				}
 
+				if(args.tags > 0){
+					data.tags = data.tags.slice(tagTotal - args.tags);
+				}
+
+				console.log("Rendering...");
 				render();
 			} 
 		});
