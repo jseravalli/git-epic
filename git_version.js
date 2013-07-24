@@ -1,3 +1,9 @@
+//Dependencies
+
+var git  = require('gift'), 
+	moment = require('moment'), 
+	_ = require('underscore');
+
 console.log("Fetching data, please wait...");
 
 var parseArgs = function(args){
@@ -25,6 +31,7 @@ var parseArgs = function(args){
 				parsedArgs.template = args[i+1];
 			break;
 
+
 		}
 
 	}
@@ -32,10 +39,7 @@ var parseArgs = function(args){
 	return parsedArgs;
 };
 
-var git  = require('gift'), 
-	moment = require('moment'), 
-	_ = require('underscore'), 
-	args = parseArgs(process.argv.splice(2)), 
+var	args = parseArgs(process.argv.splice(2)), 
 	repo = git(args.dir),
 	data = {tags : []},
 	tagTotal = 0,
@@ -51,22 +55,23 @@ var render = function(){
 	    if(err) {
 	        console.log(err);
 	    } else {
-	        console.log("The version.html file was updated!");
+	        console.log("The version file was updated!");
 	    }
 	}); 
 };
 
 repo.tags(function(err,tags){
 
-	tagTotal = tags.length;
+	tagTotal = tags.length-1;
 
-	_.each(tags, function(tag){
+	_.each(tags, function(tag){	
 
-		var commit_time = moment(tag.commit.committed_date);
+		console.log("Processing tag: " + tag.name);
 
 		repo.commits(tag.name, function(err, commits){
 			
-			var filteredCommits;
+			var commit_time = moment(tag.commit.committed_date),
+				filteredCommits;
 
 			if(args.filter.length > 0){
 				filteredCommits = _.filter(commits, function(commit){ 
@@ -86,13 +91,26 @@ repo.tags(function(err,tags){
 
 			data.tags.push({
 				name : tag.name,
-				last_commit : commit_time.calendar(),
+				last_commit : commit_time.format('YYYY-MM-DD'),
 				commits : args.filter.length > 0 ? filteredCommits : commits
 			});
 
 			tagCount++;
 
+			console.log("Processed tag: " + tag.name + ", total commits: " + commits.length);
+
 			if(tagCount === tagTotal){
+
+				for(var i = data.tags.length-1; i > 0; i--){
+
+					if(typeof(data.tags[i].commits) !== 'undefined' && typeof(data.tags[i-1].commits) !== 'undefined'){
+
+						data.tags[i].commits = data.tags[i].commits.slice(0,data.tags[i].commits.length - data.tags[i-1].commits.length);
+					
+					}
+						
+				}
+
 				render();
 			} 
 		});
