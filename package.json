@@ -1,6 +1,6 @@
 {
   "name": "gitepic",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generates a Git Version HTML",
   "main": "./lib/main",
   "bin": {
