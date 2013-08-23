@@ -1,14 +1,17 @@
 {
-  "name": "git_version.js",
+  "name": "gitepic",
   "version": "0.0.1",
   "description": "Generates a Git Version HTML",
-  "main": "git_version.js",
+  "main": "./lib/main",
+  "bin": {
+    "gitepic": "./bin/gitepic"
+  },
   "scripts": {
     "test": "node git_version.js"
   },
   "repository": {
     "type": "git",
-    "url": "NA"
+    "url": "https://github.com/jseravalli/git-epic.git"
   },
   "keywords": [
     "git",
@@ -20,5 +23,8 @@
     "gift": "0.0.5",
     "moment": "~2.1.0",
     "underscore": "1.5.1"
+  },
+  "engines": {
+    "node": "*"
   }
 }
